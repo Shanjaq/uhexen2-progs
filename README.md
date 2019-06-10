@@ -1,2 +1,3 @@
 # uhexen2-progs
-hcode for uHexen-shanjaq fork
+hcode/progs for Hammer of Thyrion fork:
+https://github.com/Shanjaq/uhexen2
