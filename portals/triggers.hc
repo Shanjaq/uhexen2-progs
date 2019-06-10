@@ -570,6 +570,47 @@ void() trigger_relay =
 };
 
 
+/*QUAKED trigger_broadcast (.5 .5 .5) (-8 -8 -8) (8 8 8)
+This fixed size trigger cannot be touched, it can only be fired by
+other events.  It can contain killtargets, targets, delays, and 
+messages.
+"failchance" - default 0 - chance that trigger may fail to fire (0 - 100%)
+*/
+void trigger_broadcast_check_reset ()
+{
+	self.check_ok=FALSE;
+}
+
+void() trigger_broadcast_use =
+{
+//	dprint("Trig_relay Used by: ");
+//	dprint(other.classname);
+//	dprint("\n");
+	if(self.failchance)
+		if(random()*100<self.failchance)
+			return;
+
+	if(!self.delay)
+		self.check_ok=TRUE;
+	if(world.spawnflags & 1) /* MISSIONPACK */
+		self.enemy = activator;
+		
+	SUB_UseTargets();
+	
+	if(self.wait)
+	{
+		self.think=trigger_broadcast_check_reset;
+		thinktime self : self.wait;
+	}
+	else
+		self.check_ok=FALSE;
+};
+
+void() trigger_broadcast =
+{
+	self.use = trigger_broadcast_use;
+};
+
 //=============================================================================
 
 /*QUAK-ED trigger_secret (.5 .5 .5) ?
@@ -1243,7 +1284,12 @@ float poof_speed;
 		}
 	}
 	else
-		org=t.origin;
+	{
+		if (!self.spawnflags & SILENT)
+			org=t.origin - '0 0 27';
+		else
+			org=t.origin;
+	}
 
 	spawn_tdeath(t.origin, other);
 
@@ -1259,7 +1305,10 @@ float poof_speed;
 	if((t.spawnflags&2||self.spawnflags&16)&&other.classname=="player")
 		other.velocity='0 0 0';//Kill all player's velocity
 
-	setorigin (other, t.origin);
+	if (!self.spawnflags & SILENT)
+		setorigin (other, t.origin);
+	else
+		setorigin (other, t.origin - '0 0 27');
 
 	if (!self.spawnflags & SILENT)
 	{
@@ -1284,7 +1333,12 @@ float poof_speed;
 				poof_speed = 225; // otherwise cant reach the balcony
 			*/
 			else
-				poof_speed = 300;
+			{
+				if (!self.spawnflags & SILENT)
+					poof_speed = 300;
+				else
+					poof_speed = vlen(other.velocity);
+			}
 			other.velocity = v_forward * poof_speed;
 		}
 	}
@@ -1566,6 +1620,7 @@ void() trigger_push =
 	precache_sound ("ambience/windpush.wav");
 
 	if(world.spawnflags&MISSIONPACK)
+	{
 		if(self.targetname)
 			self.use = trigger_push_turn_on;
 		else
@@ -1573,6 +1628,9 @@ void() trigger_push =
 			self.use = trigger_push_gone;
 			self.touch = trigger_push_touch;
 		}
+	}
+	else
+		self.touch = trigger_push_touch;
 
 	if (!self.speed)
 		self.speed = 500;

@@ -7,6 +7,38 @@ void sound_maker_run(void)
 	sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
 }
 
+void music_player_run(void)
+{
+	local entity found;
+	
+	found = find(world, classname, "player");
+	while (found)
+	{
+		if (self.noise1 == "")
+		{
+			stuffcmd(found, "music_stop\n");
+		}
+		else
+		{
+			if (self.flags & 1)
+				stuffcmd(found, "music_loop 1\n");
+			else
+				stuffcmd(found, "music_loop 0\n");
+			
+			stuffcmd(found, "music ");
+			stuffcmd(found, self.noise1);
+			stuffcmd(found, "\n");
+		}
+		found = find ( found, classname, "player");
+	}
+}
+
+void music_player_wait(void)
+{
+	self.think = music_player_run;
+	thinktime self : self.delay;
+}
+
 void sound_maker_wait(void)
 {
 	self.think = sound_maker_run;
@@ -72,7 +104,7 @@ void sound_again(void)
 		sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
 
 	self.think = sound_again;
-	self.nextthink = time + random(5,30);
+	thinktime self : random(self.flags,self.flags2);
 }
 
 
@@ -111,15 +143,17 @@ void sound_ambient (void)
 	{
 		precache_sound ("ambience/drip1.wav");
 		self.noise1 = ("ambience/drip1.wav");
+		self.flags = 5;
+		self.flags2 = 30;
 		self.think = sound_again;
-		thinktime self : random(5,30);
 	}
 	else if (self.soundtype == 3)
 	{
 		precache_sound ("ambience/drip2.wav");
 		self.noise1 = ("ambience/drip2.wav");
+		self.flags = 5;
+		self.flags2 = 30;
 		self.think = sound_again;
-		thinktime self : random(5,30);
 	}
 	else if (self.soundtype == 4)
 	{
@@ -130,29 +164,33 @@ void sound_ambient (void)
 	{
 		precache_sound ("ambience/night.wav");
 		self.noise1 = ("ambience/night.wav");
+		self.flags = 5;
+		self.flags2 = 30;
 		self.think = sound_again;
-		thinktime self : random(5,30);
 	}
 	else if (self.soundtype == 6)
 	{
 		precache_sound ("ambience/birds.wav");
 		self.noise1 = ("ambience/birds.wav");
+		self.flags = 15;
+		self.flags2 = 60;
 		self.think = sound_again;
-		thinktime self : random(15,60);
 	}
 	else if (self.soundtype == 7)
 	{
 		precache_sound ("ambience/raven.wav");
 		self.noise1 = ("ambience/raven.wav");
+		self.flags = 15;
+		self.flags2 = 60;
 		self.think = sound_again;
-		thinktime self : random(15,60);
 	}
 	else if (self.soundtype == 8)
 	{
 		precache_sound ("ambience/rockfall.wav");
 		self.noise1 = ("ambience/rockfall.wav");
+		self.flags = 15;
+		self.flags2 = 60;
 		self.think = sound_again;
-		thinktime self : random(15,60);
 	}
 	else if (self.soundtype == 9)
 	{
@@ -170,7 +208,9 @@ void sound_ambient (void)
 		self.noise1 = ("ambience/metal.wav");
 		precache_sound ("ambience/metal2.wav");
 		self.noise2 = ("ambience/metal2.wav");
-		thinktime self : random(5,30);
+		self.flags = 5;
+		self.flags2 = 30;
+		self.think = sound_again;
 	}
 	else if (self.soundtype == 12)
 	{
@@ -178,7 +218,9 @@ void sound_ambient (void)
 		self.noise1 = ("ambience/pounding.wav");
 		precache_sound ("ambience/poundin2.wav");
 		self.noise2 = ("ambience/poundin2.wav");
-		thinktime self : random(5,30);
+		self.flags = 5;
+		self.flags2 = 30;
+		self.think = sound_again;
 	}
 	else if (self.soundtype == 13)
 	{
@@ -188,7 +230,9 @@ void sound_ambient (void)
 		self.noise2 = ("ambience/moan2.wav");
 		precache_sound ("ambience/moan3.wav");
 		self.noise3 = ("ambience/moan3.wav");
-		thinktime self : random(5,30);
+		self.flags = 5;
+		self.flags2 = 30;
+		self.think = sound_again;
 	}
 	else if (self.soundtype == 14)
 	{
@@ -196,13 +240,17 @@ void sound_ambient (void)
 		self.noise1 = ("ambience/creak.wav");
 		precache_sound ("ambience/creak2.wav");
 		self.noise2 = ("ambience/creak2.wav");
-		thinktime self : random(5,30);
+		self.flags = 5;
+		self.flags2 = 30;
+		self.think = sound_again;
 	}
 	else if (self.soundtype == 15)
 	{
 		precache_sound ("ambience/rattle.wav");
 		self.noise1 = ("ambience/rattle.wav");
-		thinktime self : random(5,30);
+		self.flags = 5;
+		self.flags2 = 30;
+		self.think = sound_again;
 	}
 	else if (self.soundtype == 16)
 	{
@@ -213,7 +261,48 @@ void sound_ambient (void)
 	if (!self.think)
 		ambientsound (self.origin, self.noise1, 1, ATTN_STATIC);
 	else
+	{
 		sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
+		thinktime self : random(15,60);
+	}
 
 }
 
+void custom_sound_maker (void)
+{
+	precache_sound (self.netname);
+	self.noise1 = (self.netname);
+	
+	if (self.delay) 
+		self.use = sound_maker_wait;
+	else 
+		self.use = sound_maker_run;
+}
+
+	
+
+void custom_sound_ambient (void)
+{
+	precache_sound (self.netname);
+	self.noise1 = (self.netname);
+
+	if (self.flags) {		
+		self.think = sound_again;
+		thinktime self : random(self.flags,self.flags2);
+	}
+	
+	if (!self.think)
+		ambientsound (self.origin, self.noise1, 1, ATTN_STATIC);
+	else
+		sound (self, CHAN_VOICE, self.noise1, 1, ATTN_NORM);
+}
+
+void custom_music_player (void)
+{
+	self.noise1 = (self.netname);
+	
+	if (self.delay) 
+		self.use = music_player_wait;
+	else 
+		self.use = music_player_run;
+}

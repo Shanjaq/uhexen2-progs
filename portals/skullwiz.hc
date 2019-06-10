@@ -743,13 +743,21 @@ float loop_cnt,forward,dot;
 		else
 			spot1 = self.origin;
 
-		forward = random(120,200);
-		spot2 = spot1 + (v_forward * forward);
-		traceline (spot1, spot2 + (v_forward * 30) , FALSE, self.enemy);
+		//forward = random(120,200);
+		//spot2 = spot1 + (v_forward * forward);
+		//traceline (spot1, spot2 + (v_forward * 30) , FALSE, self.enemy);
+		forward = random((self.size_x + self.size_y),200.00000);
+		spot2 = (spot1 + (v_forward * forward) + (v_up * forward));
+		traceline ( spot1, (spot2 + (v_forward * ((self.size_x + self.size_y) * 0.5))), TRUE, self.enemy);
 		if (trace_fraction == 1.0) //  Check no one is standing where monster wants to be
 		{
+			traceline ( spot2, (spot2 - (v_up * (forward * 2.00000))), TRUE, self.enemy);
+			spot2 = trace_endpos;
+			
    			makevectors (newangle);
-			tracearea (spot2,spot2 + v_up * 80,'-32 -32 -10','32 32 46',FALSE,self);
+			//tracearea (spot2,spot2 + v_up * 80,'-32 -32 -10','32 32 46',FALSE,self);
+			//tracearea ( spot2, (spot2 + (v_up * 80.00000)), '-32 -32 -10', '32 32 46', FALSE, self);
+			tracearea ( spot2, (spot2 + (v_up * 80.00000)), self.mins, self.maxs, FALSE, self.enemy);
 			if ((trace_fraction == 1.0) && (!trace_allsolid)) // Check there is a floor at the new spot
 			{
 				spot3 = spot2 + (v_up * -4);
