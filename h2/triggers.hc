@@ -1058,7 +1058,12 @@ float poof_speed;
 		org = t.origin + 32 * v_forward;
 	}
 	else
-		org=t.origin;
+	{
+		if (!self.spawnflags & SILENT)
+			org=t.origin - '0 0 27';
+		else
+			org=t.origin;
+	}
 
 	spawn_tdeath(t.origin, other);
 
@@ -1094,7 +1099,12 @@ float poof_speed;
 			poof_speed = 225; // otherwise cant reach the balcony
 		*/
 		else
-			poof_speed = 300;
+		{
+			if (!self.spawnflags & SILENT)
+				poof_speed = 300;
+			else
+				poof_speed = vlen(other.velocity);
+		}
 		other.velocity = v_forward * poof_speed;
 	}
 
