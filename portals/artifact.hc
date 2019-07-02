@@ -686,7 +686,39 @@ void art_sword_and_crown()
 
 void item_spawner_use(void)
 {
-	DropBackpack();
+	entity the_item, oldself;
+	
+	if (self.spawnflags & 1)
+	{
+		the_item = spawn();
+		setorigin(the_item, self.origin);
+		the_item.cnt_torch = self.cnt_torch;
+		the_item.cnt_h_boost = self.cnt_h_boost;
+		the_item.cnt_sh_boost = self.cnt_sh_boost;
+		the_item.cnt_mana_boost = self.cnt_mana_boost;
+		the_item.cnt_teleport = self.cnt_teleport;
+		the_item.cnt_tome = self.cnt_tome;
+		the_item.cnt_summon = self.cnt_summon;
+		the_item.cnt_invisibility = self.cnt_invisibility;
+		the_item.cnt_glyph = self.cnt_glyph;
+		the_item.cnt_haste = self.cnt_haste;
+		the_item.cnt_blast = self.cnt_blast;
+		the_item.cnt_polymorph = self.cnt_polymorph;
+		the_item.cnt_flight = self.cnt_flight;
+		the_item.cnt_cubeofforce = self.cnt_cubeofforce;
+		the_item.cnt_invincibility = self.cnt_invincibility;
+		the_item.ring_flight = self.ring_flight;
+		the_item.ring_water = self.ring_water;
+		the_item.ring_turning = self.ring_turning;
+		the_item.ring_regeneration = self.ring_regeneration;
+		
+		oldself = self;
+		self = the_item;
+		DropBackpack();
+		self = oldself;
+	}
+	else
+		DropBackpack();
 }
 
 /*QUAKED item_spawner (.0 .0 .5) (-8 -8 -44) (8 8 20) 
@@ -706,4 +738,3 @@ void item_spawner()
 	
 	self.use = item_spawner_use;
 }
-

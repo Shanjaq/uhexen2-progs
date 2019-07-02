@@ -1533,6 +1533,30 @@ void DropBackpack(void)
 //	total = 1;
 //	item.cnt_tome = 1;
 
+	if (self.ring_flight > 0)
+	{
+		total += 1;
+		item.ring_flight = self.ring_flight;
+	}
+
+	if (self.ring_water > 0)
+	{
+		total += 1;
+		item.ring_water = self.ring_water;
+	}
+
+	if (self.ring_turning > 0)
+	{
+		total += 1;
+		item.ring_turning = self.ring_turning;
+	}
+
+	if (self.ring_regeneration > 0)
+	{
+		total += 1;
+		item.ring_regeneration = self.ring_regeneration;
+	}
+
 	if (!total && !item.bluemana && !item.greenmana && !item.spawn_health) 
 	{	// Nothing to put in the backpack
 		remove(item);
@@ -1652,6 +1676,22 @@ void DropBackpack(void)
 		{
 			spawn_item_armor_helmet();
 		}
+		else if (item.ring_water)
+		{
+			Ring_Init ( "models/ringwb.mdl", STR_RINGWATERBREATHING);
+		}
+		else if (item.ring_flight)
+		{
+			Ring_Init ( "models/ringft.mdl", STR_RINGFLIGHT);
+		}
+		else if (item.ring_regeneration)
+		{
+			Ring_Init ( "models/ringre.mdl", STR_RINGREGENERATION);
+		}
+		else if (item.ring_turning)
+		{
+			Ring_Init ( "models/ringtn.mdl", STR_RINGTURNING);
+		}
 		else
 		{
 			dprint("Bad backpack!");
@@ -1706,5 +1746,10 @@ void DropBackpack(void)
 	self.bluemana=0;
 	self.greenmana=0;
 	self.spawn_health=0;
+
+	self.ring_water=0;
+	self.ring_flight=0;
+	self.ring_regeneration=0;
+	self.ring_turning=0;	
 }
 
