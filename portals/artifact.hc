@@ -11,7 +11,6 @@
  */
 void() SUB_regen;
 void() StartItem;
-void() Ring_Flight;
 void ring_touch(void);
 
 void artifact_touch()

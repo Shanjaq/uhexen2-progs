@@ -856,7 +856,10 @@ void Precache_mdl (void)
 //	precache_model("models/a_xray.mdl");
 	precache_model("models/a_invis.mdl");
 	precache_model("models/cube.mdl");
+	precache_model("models/ringwb.mdl");
 	precache_model("models/ringft.mdl");
+	precache_model("models/ringre.mdl");
+	precache_model("models/ringtn.mdl");
 
 	//Lambinator
 	precache_model("models/sheep.mdl");

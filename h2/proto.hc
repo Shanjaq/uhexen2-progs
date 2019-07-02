@@ -69,4 +69,4 @@ vector aim_adjust (entity targ);
 void()respawn;
 void()GibPlayer;
 void stats_NewClass(entity e);
-
+void Ring_Init(string modelname,string name);

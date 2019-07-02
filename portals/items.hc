@@ -1769,6 +1769,7 @@ float total;
 	self.bluemana=0;
 	self.greenmana=0;
 	self.spawn_health=0;
+	
 	self.ring_water=0;
 	self.ring_flight=0;
 	self.ring_regeneration=0;
