@@ -1702,18 +1702,22 @@ float total;
 		}
 		else if (item.ring_water)
 		{
+			self.classname = "Ring_WaterBreathing";
 			Ring_Init ( "models/ringwb.mdl", STR_RINGWATERBREATHING);
 		}
 		else if (item.ring_flight)
 		{
+			self.classname = "Ring_Flight";
 			Ring_Init ( "models/ringft.mdl", STR_RINGFLIGHT);
 		}
 		else if (item.ring_regeneration)
 		{
+			self.classname = "Ring_Regeneration";
 			Ring_Init ( "models/ringre.mdl", STR_RINGREGENERATION);
 		}
 		else if (item.ring_turning)
 		{
+			self.classname = "Ring_Turning";
 			Ring_Init ( "models/ringtn.mdl", STR_RINGTURNING);
 		}
 		else
