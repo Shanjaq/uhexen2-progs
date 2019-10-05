@@ -430,7 +430,9 @@ void()lightning_ready_normal;
 void lightning_fire_normal (void)
 {
 	if(self.weaponframe_cnt)
+	{
 		self.wfs = advanceweaponframe($fidle1,$fidle16);
+	}
 	else
 	{
 		self.wfs = advanceweaponframe($normal1,$normal16);
@@ -476,7 +478,7 @@ void lightning_fire_normal (void)
 		}
 		lightning_ready_normal();
 	}
-	else if(self.weaponframe==$normal12 ||(self.weaponframe>=$fidle1 &&self.weaponframe<=$fidle16))
+	else if(self.weaponframe==$normal12 || self.weaponframe==$normal16 || (self.weaponframe>=$fidle1 &&self.weaponframe<=$fidle16)) //ws: added weaponframe normal16 to statement
 	{
 		if(self.attack_finished<time)
 		{
