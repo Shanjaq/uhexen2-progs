@@ -61,7 +61,7 @@ vector newmaxs;
 
 //Won't be necc to pass headmdl once everything has it's .headmodel
 //value set in spawn
-	self.target = "";
+	self.target = string_null;
     self.th_die = chunk_death;
 	self.touch = obj_push;
     self.health = random(10,25);
