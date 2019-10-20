@@ -629,6 +629,7 @@ void chunk_death (void)
 		return;
 
 	SUB_UseTargets();
+	self.target = "";
 
 	if(self.headmodel!=""&&self.classname!="head")
 		ThrowSolidHead (50);
