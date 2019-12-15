@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/uhexen2/gamecode/hc/portals/sickle.hc,v 1.3 2007-02-07 16:59:36 sezero Exp $
+ * $Header: /cvsroot/uhexen2/gamecode/hc/hw/sickle.hc,v 1.2 2007-02-07 16:58:02 sezero Exp $
  */
 
 /*
@@ -92,32 +92,15 @@ void sickle_fire ()
 
 			if (random() < chance)
 			{
-			//	point_chance = (self.level - 5) * 2;
-			//	if (point_chance > 10)
-			//		point_chance = 10;
-			/* Pa3PyX -- This HAS TO change: One will be dead 3 times
-			 * before stealing their 10 hit points at clvl 10 in 5 hits
-			 * trying to hack away at a medusa or an archer lord. This
-			 * has to be at least 20 to make any practical use of this
-			 * level 6 ability, and at most that, since spiders can be
-			 * leeched from fairly easily (but they will still caw at
-			 * you at least twice before your hit actually drains).
-			 * Given that you cannot leech from dead bodies.	*/
-				point_chance = (self.level - 5) * 4;
-				if (point_chance > 20)
-					point_chance = 20;
+				point_chance = (self.level - 5) * 2;
+				if (point_chance > 10)
+					point_chance = 10;
 
 				sound (self, CHAN_BODY, "weapons/drain.wav", 1, ATTN_NORM);
 
-			//	self.health += point_chance;
-			//	if (self.health>self.max_health)
-			//		self.health = self.max_health;
-			//	Pa3PyX: no longer cancel mystic urn effect
-				if (self.health < self.max_health) {
-					self.health += point_chance;
-					if (self.health>self.max_health)
-						self.health = self.max_health;
-				}
+				self.health += point_chance;
+				if (self.health>self.max_health)
+					self.health = self.max_health;
 			}
 		}
 
@@ -133,7 +116,7 @@ void sickle_fire ()
 			else
 				inertia=trace_ent.mass/10;
 
-			if ((trace_ent.hull != HULL_SCORPION) && (inertia<1000) && (trace_ent.classname != "breakable_brush"))
+			if ((trace_ent.hull != HULL_BIG) && (inertia<1000) && (trace_ent.classname != "breakable_brush"))
 			{
 				if (trace_ent.mass < 1000)
 				{
@@ -166,11 +149,13 @@ void sickle_fire ()
 	else
 	{	// hit wall
 		sound (self, CHAN_WEAPON, "weapons/hitwall.wav", 1, ATTN_NORM);
-		WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
-		WriteByte (MSG_BROADCAST, TE_GUNSHOT);
-		WriteCoord (MSG_BROADCAST, org_x);
-		WriteCoord (MSG_BROADCAST, org_y);
-		WriteCoord (MSG_BROADCAST, org_z);
+		WriteByte (MSG_MULTICAST, SVC_TEMPENTITY);
+		WriteByte (MSG_MULTICAST, TE_GUNSHOT);
+		WriteByte (MSG_MULTICAST, 1);
+		WriteCoord (MSG_MULTICAST, org_x);
+		WriteCoord (MSG_MULTICAST, org_y);
+		WriteCoord (MSG_MULTICAST, org_z);
+		multicast(self.origin,MULTICAST_PHS);
 
 		if (self.artifact_active & ART_TOMEOFPOWER)
 			CreateWhiteFlash(trace_endpos - v_forward*8);
