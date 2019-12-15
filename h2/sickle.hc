@@ -173,7 +173,7 @@ void sickle_fire ()
 		WriteCoord (MSG_BROADCAST, org_z);
 
 		if (self.artifact_active & ART_TOMEOFPOWER)
-			CreateWhiteFlash(org);
+			CreateWhiteFlash(trace_endpos - v_forward*8);
 		else
 		{
 			org = trace_endpos + (v_forward * -1) + (v_right * 15);
