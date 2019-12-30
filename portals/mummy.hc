@@ -475,6 +475,8 @@ void mummy_pain(void)
 
 	if (hold_parts != self.parts_gone)
 		sound (self, CHAN_BODY, "mummy/limbloss.wav", 1, ATTN_NORM);
+	
+	self.pain_finished = time+random(0.3,0.8);
 }
 
 

@@ -424,6 +424,7 @@ void ScorpionPainDecide(void)
 	{
 		ScorpionPain();
 		sound(self, CHAN_VOICE, "scorpion/pain.wav", 1, ATTN_NORM);
+		self.pain_finished = time + 0.25;
 	}
 }
 
@@ -453,6 +454,8 @@ void ScorpionMelee(float damage)
 	makevectors (self.angles);
 	source = self.origin;
 	traceline (source, source + v_forward*60, FALSE, self);
+	if (trace_fraction == 1.0)
+		traceline (source + v_up*10, source + v_up*10 + v_forward*60, FALSE, self);  //ws: crouching players are no longer invulnerable
 
 	if (trace_ent != self.enemy) return;
 
