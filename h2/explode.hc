@@ -9,8 +9,9 @@ void()BlowUp=
 		self.scale=self.dmg;
 	    T_RadiusDamage (self, self.owner, self.dmg*100, world);
 		self.dmg += 0.1;
-		if(self.enemy)	//Stay with enemy;
-			setorigin(self,self.enemy.origin+self.view_ofs);
+		if(self.enemy)
+			if(self.enemy.health>0&&self.enemy.flags2&FL_ALIVE)//Stay with enemy;
+				setorigin(self,self.enemy.origin+self.view_ofs);
 		self.think=BlowUp;
 		thinktime self : 0.025;
 	}
