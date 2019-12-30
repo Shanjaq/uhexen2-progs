@@ -408,6 +408,7 @@ void ScorpionPainDecide(void)
 	{
 		ScorpionPain();
 		sound(self, CHAN_VOICE, "scorpion/pain.wav", 1, ATTN_NORM);
+		self.pain_finished = time + 0.25;
 	}
 }
 
