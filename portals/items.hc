@@ -1554,31 +1554,31 @@ float total;
 	item.spawn_health = self.spawn_health;
 
 
-	if (self.ring_flight > 0)	
-	{	
-		total += 1;	
-		item.ring_flight = self.ring_flight;	
-	}	
-
-	if (self.ring_water > 0)	
-	{	
-		total += 1;	
-		item.ring_water = self.ring_water;	
-	}	
-
-	if (self.ring_turning > 0)	
-	{	
-		total += 1;	
-		item.ring_turning = self.ring_turning;	
-	}	
-
-	if (self.ring_regeneration > 0)	
-	{	
-		total += 1;	
-		item.ring_regeneration = self.ring_regeneration;	
+	if (self.ring_flight > 0)
+	{
+		total += 1;
+		item.ring_flight = self.ring_flight;
 	}
 
-	if (!total && !item.bluemana && !item.greenmana && !item.spawn_health) 
+	if (self.ring_water > 0)
+	{
+		total += 1;
+		item.ring_water = self.ring_water;
+	}
+
+	if (self.ring_turning > 0)
+	{
+		total += 1;
+		item.ring_turning = self.ring_turning;
+	}
+
+	if (self.ring_regeneration > 0)
+	{
+		total += 1;
+		item.ring_regeneration = self.ring_regeneration;
+	}
+
+	if (!total && !item.bluemana && !item.greenmana && !item.spawn_health)
 		if(self.classname!="player")
 			total=RandomMonsterGoodies();
 
