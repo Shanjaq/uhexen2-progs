@@ -380,6 +380,12 @@ void warhammer_fire (string hitdir,vector ofs)
 		else if(ofs=='0 0 0')
 		{	// hit wall, add sparks?
 			sound (self, CHAN_WEAPON, "weapons/hitwall.wav", 1, ATTN_NORM);
+			CreateSpark (trace_endpos + v_forward*(-1) + v_right*10 + v_up*(-40));
+			WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
+			WriteByte (MSG_BROADCAST, TE_GUNSHOT);
+			WriteCoord (MSG_BROADCAST, org_x);
+			WriteCoord (MSG_BROADCAST, org_y);
+			WriteCoord (MSG_BROADCAST, org_z);
 		}
 	}
 }

@@ -544,7 +544,7 @@ float W_CheckNoAmmo (float check_weapon)
 				if(self.bluemana >= 8 && self.greenmana >= 8)
 					return TRUE;
 			}
-			else if(self.bluemana >= 2 && self.greenmana >= 2)
+			else if(self.bluemana >= 1 && self.greenmana >= 1)
 					return TRUE;
 		}
 		else if (check_weapon==IT_WEAPON3)

@@ -275,7 +275,7 @@ WEAPONS
 ===============================================================================
 */
 
-float MAX_INV = 25;
+float MAX_INV = 15;		//ws: changed from 25 because most items actually have a cap of 15 in artifacts.hc
 
 void max_ammo2 (entity AddTo, entity AddFrom)
 {
@@ -283,10 +283,12 @@ void max_ammo2 (entity AddTo, entity AddFrom)
 
 	if (AddTo.cnt_torch + AddFrom.cnt_torch > MAX_INV)
 		AddFrom.cnt_torch = MAX_INV - AddTo.cnt_torch;
-	if (AddTo.cnt_h_boost + AddFrom.cnt_h_boost > MAX_INV)
+	if (AddTo.playerclass==CLASS_CRUSADER && AddTo.cnt_h_boost + AddFrom.cnt_h_boost > 30)
+		AddFrom.cnt_h_boost = 30 - AddTo.cnt_h_boost;
+	else if (AddTo.cnt_h_boost + AddFrom.cnt_h_boost > MAX_INV)
 		AddFrom.cnt_h_boost = MAX_INV - AddTo.cnt_h_boost;
-	if (AddTo.cnt_sh_boost + AddFrom.cnt_sh_boost > MAX_INV)
-		AddFrom.cnt_sh_boost = MAX_INV - AddTo.cnt_sh_boost;
+	if (AddTo.cnt_sh_boost + AddFrom.cnt_sh_boost > 5)
+		AddFrom.cnt_sh_boost = 5 - AddTo.cnt_sh_boost;
 	if (AddTo.cnt_mana_boost + AddFrom.cnt_mana_boost > MAX_INV)
 		AddFrom.cnt_mana_boost = MAX_INV - AddTo.cnt_mana_boost;
 	if (AddTo.cnt_teleport + AddFrom.cnt_teleport > MAX_INV)
@@ -297,7 +299,9 @@ void max_ammo2 (entity AddTo, entity AddFrom)
 		AddFrom.cnt_summon = MAX_INV - AddTo.cnt_summon;
 	if (AddTo.cnt_invisibility + AddFrom.cnt_invisibility > MAX_INV)
 		AddFrom.cnt_invisibility = MAX_INV - AddTo.cnt_invisibility;
-	if (AddTo.cnt_glyph + AddFrom.cnt_glyph > MAX_INV)
+	if (AddTo.playerclass==CLASS_CRUSADER && AddTo.cnt_glyph + AddFrom.cnt_glyph > 50)
+		AddFrom.cnt_glyph = 50 - AddTo.cnt_glyph;
+	else if (AddTo.cnt_glyph + AddFrom.cnt_glyph > MAX_INV)
 		AddFrom.cnt_glyph = MAX_INV - AddTo.cnt_glyph;
 	if (AddTo.cnt_haste + AddFrom.cnt_haste > MAX_INV)
 		AddFrom.cnt_haste = MAX_INV - AddTo.cnt_haste;
@@ -1573,8 +1577,8 @@ float total;
 		total += 1;
 		item.ring_regeneration = self.ring_regeneration;
 	}
-	
-	if (!total && !item.bluemana && !item.greenmana && !item.spawn_health) 
+
+	if (!total && !item.bluemana && !item.greenmana && !item.spawn_health)
 		if(self.classname!="player")
 			total=RandomMonsterGoodies();
 
@@ -1773,10 +1777,5 @@ float total;
 	self.bluemana=0;
 	self.greenmana=0;
 	self.spawn_health=0;
-	
-	self.ring_water=0;
-	self.ring_flight=0;
-	self.ring_regeneration=0;
-	self.ring_turning=0;
 }
 

@@ -417,7 +417,7 @@ void() pal_purifier_fire =
 	if ((self.artifact_active & ART_TOMEOFPOWER) &&
 		(self.greenmana >= 8) && (self.bluemana >= 8))
 		purifier_tomefire();
-	else if ((self.greenmana >= 2) && (self.bluemana >= 2))
+	else if ((self.greenmana >= 1) && (self.bluemana >= 1))
 		purifier_rapidfire();
 
 	self.nextthink=time;
