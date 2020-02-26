@@ -106,7 +106,7 @@ void sound_again(void)
 	if (self.flags == 0)
 		self.flags = 5;
 	if (self.flags2 == 0)
-		self.flags = 30;
+		self.flags2 = 30;
 
 	self.think = sound_again;
 	thinktime self : random(self.flags,self.flags2);
