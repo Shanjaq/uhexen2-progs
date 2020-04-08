@@ -756,7 +756,7 @@ float loop_cnt,forward,dot;
    			makevectors (newangle);
 			//tracearea (spot2,spot2 + v_up * 80,'-32 -32 -10','32 32 46',FALSE,self);
 			//tracearea ( spot2, (spot2 + (v_up * 80.00000)), '-32 -32 -10', '32 32 46', FALSE, self);
-			tracearea ( spot2, (spot2 + (v_up * 80.00000)), self.mins, self.maxs, FALSE, self.enemy);
+			tracearea ( spot2, (spot2 + (v_up * 80.00000)), self.orgnl_mins-'8 8 0', self.orgnl_maxs+'8 8 0', FALSE, self);
 			if ((trace_fraction == 1.0) && (!trace_allsolid)) // Check there is a floor at the new spot
 			{
 				spot3 = spot2 + (v_up * -4);
@@ -769,7 +769,7 @@ float loop_cnt,forward,dot;
 				else 
 				{
    					makevectors (newangle);
-					traceline (spot1, spot2, FALSE, self.enemy);
+					traceline (spot1, spot2, FALSE, self);
 
 					if (trace_fraction == 1.0)
 					{
@@ -781,7 +781,10 @@ float loop_cnt,forward,dot;
 						if (walkmove(self.angles_y, .05, TRUE))		// You have to move it a little bit to make it solid
 							trace_fraction = 1;   // So it will end loop					
 						else
-							trace_fraction = 0;   // So it will loop					
+						{
+							self.solid = SOLID_NOT;		//ws: Unset solid to prevent player from getting stuck
+							trace_fraction = 0;   // So it will loop
+						}							
 					}
 					else
 					{
@@ -813,8 +816,8 @@ float loop_cnt,forward,dot;
 	self.nextthink = time;	
 	sound (self, CHAN_VOICE, "skullwiz/blinkin.wav", 1, ATTN_NORM);
 	CreateRedFlash(self.origin + '0 0 40');
-	
 }
+
 
 /*-----------------------------------------
 	skullwiz_blinkout - blink out
