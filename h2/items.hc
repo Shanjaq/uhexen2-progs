@@ -817,6 +817,7 @@ void spawn_item_armor_helmet(void)
 	self.hull=HULL_POINT;
 	self.touch = armor_touch;
 	self.netname = STR_ARMORHELMET;
+	self.classname = "item_armor_helmet";	//ws: enforce classname here because otherwise armor dropped by monsters doesn't count as armor to armor_touch
 
 	StartItem ();
 }
@@ -838,6 +839,7 @@ void spawn_item_armor_breastplate (void)
 	self.hull=HULL_POINT;
 	self.touch = armor_touch;
 	self.netname = STR_ARMORBREASTPLATE;
+	self.classname = "item_armor_breastplate";
 
 	StartItem ();
 }
@@ -859,6 +861,7 @@ void spawn_item_armor_bracer(void)
 	self.hull=HULL_POINT;
 	self.touch = armor_touch;
 	self.netname = STR_ARMORBRACER;
+	self.classname = "item_armor_bracer";
 
 	StartItem ();
 }
@@ -880,6 +883,7 @@ void spawn_item_armor_amulet(void)
 	self.hull=HULL_POINT;
 	self.touch = armor_touch;
 	self.netname = STR_ARMORAMULET;
+	self.classname = "item_armor_amulet";
 
 	StartItem ();
 }
