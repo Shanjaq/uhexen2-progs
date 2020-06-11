@@ -449,9 +449,9 @@ void skullwiz_pain_anim () [++ $skpain1 .. $skpain12]
 		else
 			sound (self, CHAN_BODY, "skullwiz/pain2.wav", 1, ATTN_NORM);
 	}
-
-	if (self.frame < $skpain11)
-		self.frame += 1;
+	//ws: frame advance is handled automatically by the function, so the following skipped most frames (including the frame with pain sound)
+	//if (self.frame < $skpain11)
+		//self.frame += 1;
 
 	if (self.frame>=$skpain12)
 	{
