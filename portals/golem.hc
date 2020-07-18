@@ -1423,25 +1423,25 @@ void GolemDeathFinish(void) [++ $death12..$death22]
 		{ // Assumed bronze
 			sound(self, CHAN_BODY, "golem/mtlfall.wav", 1, ATTN_NORM);
 		}
-
-
+		/*
 		if (GolemCheckSolidGround())
 		{
 			GolemChunkDeath();
-			//MakeSolidCorpse();
 		}
 		else
 		{
 			self.think = chunk_death;
 			thinktime self : 0.1;
 		}
-
+		*/
+		
+		GolemChunkDeath();
 		return;
 	}
 	
 	if(self.frame == $death16)
 	{
-		self.solid = SOLID_NOT;
+		self.solid = SOLID_PHASE;
 	}
 	
 	if (self.frame > $death16)
@@ -1450,7 +1450,7 @@ void GolemDeathFinish(void) [++ $death12..$death22]
 		self.origin += v_forward * 4;
 	}
 
-	if(self.health < -50)
+	if(self.health < -60)
 	{
 		self.think = chunk_death;
 	}
