@@ -15,6 +15,7 @@ math.hc
 strings.hc
 spawn.hc
 chunk.hc
+misc_model.hc
 
 sound.hc
 fx.hc
