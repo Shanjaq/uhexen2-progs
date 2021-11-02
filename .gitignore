@@ -52,3 +52,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 progdefs.h
+/.vs/uhexen2-progs/v16/.suo
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
