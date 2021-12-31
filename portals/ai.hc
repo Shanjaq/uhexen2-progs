@@ -1003,7 +1003,7 @@ float have_monsters;
 	{
 		precache_model4 ("models/snowleopard.mdl");
 		precache_model2 ("models/mezzoref.spr");
-		precache_model2 ("models/h_mez.mdl");
+		precache_model2 ("models/h_mez2.mdl");
 		precache_sound2 ("mezzo/skid.wav");
 		precache_sound2 ("mezzo/roar.wav");
 		precache_sound2 ("mezzo/reflect.wav");
